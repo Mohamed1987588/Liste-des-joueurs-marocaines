@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lions de l'Atlas dans le Monde | Suivi & Statistiques</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(28, 37, 57, 0.9);
+      --morocco-red: #c1272d;
+      --morocco-green: #006233;
+      --accent-gold: #d4af37;
+      --accent-emerald: #10b981;
+      --accent-blue: #38bdf8;
+      --accent-amber: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 98, 51, 0.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(193, 39, 45, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 98, 51, 0.15) 0%, transparent 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .container { max-width: 1380px; margin: 0 auto; padding: 0 24px; }
+
+    /* HEADER */
+    header {
+      padding: 40px 0 20px;
+      text-align: center;
+      position: relative;
+    }
+    .badge-nation {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(193, 39, 45, 0.15);
+      border: 1px solid rgba(193, 39, 45, 0.35);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fca5a5;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 70%, var(--accent-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 30px;
+    }
+
+    /* KPI STATS BAR */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    .kpi-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    .kpi-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-value { font-size: 1.8rem; font-weight: 800; color: #fff; }
+
+    /* ACTION BAR & CONTROLS */
+    .controls-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .top-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+    .search-box input {
+      width: 100%;
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 16px 12px 42px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--accent-emerald);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+    .search-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: var(--text-muted);
+    }
+
+    .btn-action-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--morocco-green), #047857);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .upload-btn:hover {
+      background: linear-gradient(135deg, #047857, #065f46);
+      transform: translateY(-1px);
+    }
+    #fileInput { display: none; }
+
+    /* FILTERS AND SORTS */
+    .filter-sort-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+    .tabs-positions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 7px 16px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: #fff; border-color: rgba(255, 255, 255, 0.2); }
+    .tab-btn.active {
+      background: var(--morocco-red);
+      border-color: var(--morocco-red);
+      color: #fff;
+    }
+
+    .sort-select {
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* GRID OF PLAYERS */
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 20px;
+    }
+    .player-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 22px;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .player-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--card-accent, #64748b), transparent);
+      opacity: 0.8;
+    }
+    .player-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    /* POSITION COLORS */
+    .pos-gardien { --card-accent: var(--accent-amber); }
+    .pos-defenseur { --card-accent: var(--accent-blue); }
+    .pos-milieu { --card-accent: var(--accent-emerald); }
+    .pos-attaquant { --card-accent: var(--morocco-red); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .pos-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid;
+    }
+    .badge-gardien { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
+    .badge-defenseur { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
+    .badge-milieu { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+    .badge-attaquant { background: rgba(225, 29, 72, 0.15); color: #fb7185; border-color: rgba(225, 29, 72, 0.3); }
+
+    .player-age {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .player-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .player-club {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .club-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-gold); }
+
+    /* STATS CHIPS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: rgba(10, 15, 26, 0.6);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 18px;
+    }
+    .stat-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .stat-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px; }
+    .stat-num { font-size: 1rem; font-weight: 700; color: #fff; }
+
+    /* PROGRESS BAR */
+    .min-bar-wrapper { margin-bottom: 18px; }
+    .min-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--morocco-green), var(--accent-emerald));
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    /* CARD ACTION */
+    .btn-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px;
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: var(--accent-gold);
+    }
+    .btn-link.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="badge-nation">🇲🇦 Fédération Royale Marocaine • Base Internationale</div>
+    <h1>Lions de l'Atlas dans le Monde</h1>
+    <p class="subtitle">Plateforme interactive de suivi, statistiques et fiches officielles des footballeurs marocains évoluant à l'international.</p>
+
+    <!-- KPI STATS -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Total Joueurs</span>
+        <span class="kpi-value" id="kpiTotal">0</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Gardiens</span>
+        <span class="kpi-value" id="kpiGk" style="color: var(--accent-amber);">0</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Défenseurs</span>
+        <span class="kpi-value" id="kpiDef" style="color: var(--accent-blue);">0</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Milieux</span>
+        <span class="kpi-value" id="kpiMid" style="color: var(--accent-emerald);">0</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Attaquants</span>
+        <span class="kpi-value" id="kpiAtt" style="color: #fb7185;">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- ACTION BAR & FILTERS -->
+  <div class="controls-wrapper">
+    <div class="top-controls">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="searchInput" placeholder="Rechercher un joueur ou un club (ex: Hakimi, Real Madrid, Marseille...)...">
+      </div>
+
+      <div class="btn-action-group">
+        <label for="fileInput" class="upload-btn">
+          <span>📤 Mettre à jour (CSV)</span>
+        </label>
+        <input type="file" id="fileInput" accept=".csv">
+      </div>
+    </div>
+
+    <div class="filter-sort-row">
+      <div class="tabs-positions">
+        <button class="tab-btn active" data-pos="all">Tous (<span id="countAll">0</span>)</button>
+        <button class="tab-btn" data-pos="Gardien">Gardiens</button>
+        <button class="tab-btn" data-pos="Défenseur">Défenseurs</button>
+        <button class="tab-btn" data-pos="Milieu">Milieux</button>
+        <button class="tab-btn" data-pos="Attaquant">Attaquants</button>
+      </div>
+
+      <div>
+        <select id="sortSelect" class="sort-select">
+          <option value="minutes">Trier : Temps de jeu ↓</option>
+          <option value="goals">Trier : Buts marqués ↓</option>
+          <option value="age">Trier : Âge ↓</option>
+          <option value="name">Trier : Nom A-Z</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYER CARDS CONTAINER -->
+  <div class="players-grid" id="playersGrid"></div>
+</main>
+
+<script>
+  // Données initiales extraites de votre fichier CSV
+  let initialData = [
+    {"id":"1","name":"Yassine Bounou","club":"Al-Hilal","position":"Gardien","age":34,"minutes":270,"goals_conceded":1,"link":"https://www.fotmob.com/fr/players/340020/yassine-bounou"},
+    {"id":"2","name":"Munir El Kajoui","club":"RS Berkane","position":"Gardien","age":38,"minutes":null,"goals_conceded":null,"link":"https://www.fotmob.com/fr/players/573787/munir-el-kajoui"},
+    {"id":"3","name":"Alaa Bellaarouch","club":"Dinamo Bucarest","position":"Gardien","age":24,"minutes":900,"goals_conceded":7,"link":"https://www.fotmob.com/fr/players/1327488/alaa-bellaarouch"},
+    {"id":"4","name":"Ahmed Reda Tagnaouti","club":"AS FAR","position":"Gardien","age":29,"minutes":1163,"goals_conceded":null,"link":"https://www.fotmob.com/fr/players/885288/ahmed-tagnaouti"},
+    {"id":"5","name":"El Mehdi Al Harrar","club":"Raja CA","position":"Gardien","age":24,"minutes":1530,"goals_conceded":null,"link":"https://www.fotmob.com/fr/players/1687452/el-mehdi-al-harrar"},
+    {"id":"6","name":"Omar El Hilali","club":"RCD Espanyol","position":"Défenseur","age":22,"minutes":270,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1208708/omar-el-hilali"},
+    {"id":"7","name":"Achraf Hakimi","club":"Paris Saint-Germain","position":"Défenseur","age":27,"minutes":180,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/770881/achraf-hakimi"},
+    {"id":"8","name":"Issa Diop","club":"Ipswich Town","position":"Défenseur","age":29,"minutes":90,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/696443/issa-diop"},
+    {"id":"9","name":"Nayef Aguerd","club":"Olympique de Marseille","position":"Défenseur","age":30,"minutes":298,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/617310/nayef-aguerd"},
+    {"id":"10","name":"Redouane Halhal","club":"KV Mechelen","position":"Défenseur","age":22,"minutes":46,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1298186/redouane-halhal"},
+    {"id":"11","name":"Ismaël Baouf","club":"SC Cambuur","position":"Défenseur","age":19,"minutes":270,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1572671/ismael-baouf"},
+    {"id":"12","name":"Abdel Abqar","club":"Getafe CF","position":"Défenseur","age":27,"minutes":91,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/956921/abdel-abqar"},
+    {"id":"13","name":"Adam Masina","club":"Torino FC","position":"Défenseur","age":32,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/500502/adam-masina"},
+    {"id":"14","name":"Hamza Koutoune","club":"OGC Nice","position":"Défenseur","age":20,"minutes":17,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1796096/hamza-koutoune"},
+    {"id":"15","name":"Abdelhamid Aït Boudlal","club":"Stade Rennais","position":"Défenseur","age":20,"minutes":90,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1581722/abdelhamid-ait-boudlal"},
+    {"id":"16","name":"Souffian El Karouani","club":"Benfica / FC Utrecht","position":"Défenseur","age":25,"minutes":91,"assists":1,"goals":null,"link":"https://www.fotmob.com/fr/players/1079500/souffian-el-karouani"},
+    {"id":"17","name":"Adam Aznou","club":"Málaga CF / Bayern","position":"Défenseur","age":20,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1573563/adam-aznou"},
+    {"id":"18","name":"Youssef Enríquez","club":"Deportivo Alavés","position":"Défenseur","age":20,"minutes":148,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1403692/youssef-enriquez"},
+    {"id":"19","name":"Noussair Mazraoui","club":"Manchester United","position":"Défenseur","age":28,"minutes":80,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/775539/noussair-mazraoui"},
+    {"id":"20","name":"Anass Salah-Eddine","club":"Panathinaïkos","position":"Défenseur","age":24,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1050838/anass-salah-eddine"},
+    {"id":"21","name":"Ismael Saibari","club":"Bayern Munich / PSV","position":"Milieu","age":24,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1180288/ismael-saibari"},
+    {"id":"22","name":"Bilal El Khannouss","club":"VfB Stuttgart / Leicester","position":"Milieu","age":21,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1340895/bilal-el-khannouss"},
+    {"id":"23","name":"Younes Taha","club":"FC Twente","position":"Milieu","age":23,"minutes":439,"assists":2,"goals":2,"link":"https://www.fotmob.com/fr/players/1298600/younes-taha"},
+    {"id":"24","name":"Azzedine Ounahi","club":"Panathinaïkos","position":"Milieu","age":25,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1073143/azzedine-ounahi"},
+    {"id":"25","name":"Mohamed Ihattaren","club":"Fortuna Sittard","position":"Milieu","age":24,"minutes":494,"assists":2,"goals":3,"link":"https://www.fotmob.com/fr/players/1015183/mohammed-ihattaren"},
+    {"id":"26","name":"Amine Harit","club":"Olympique de Marseille","position":"Milieu","age":29,"minutes":416,"assists":1,"goals":null,"link":"https://www.fotmob.com/fr/players/780815/amine-harit"},
+    {"id":"27","name":"Abdellah Ouazane","club":"Ajax Amsterdam","position":"Milieu","age":17,"minutes":271,"assists":null,"goals":1,"link":"https://www.fotmob.com/fr/players/1795819/abdellah-ouazane"},
+    {"id":"28","name":"Rafik El Arguioui","club":"SC Cambuur","position":"Milieu","age":21,"minutes":630,"assists":0,"goals":4,"link":"https://www.fotmob.com/fr/players/1344244/rafik-el-arguioui"},
+    {"id":"29","name":"Ali Houary","club":"Elche CF","position":"Milieu","age":21,"minutes":190,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1670281/ali-houary"},
+    {"id":"30","name":"Anis Soubeir","club":"AS Monaco","position":"Milieu","age":19,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/2130847/anis-soubeir"},
+    {"id":"31","name":"Youssef Maleh","club":"US Lecce","position":"Milieu","age":28,"minutes":253,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/789243/youssef-maleh"},
+    {"id":"32","name":"Neil El Aynaoui","club":"RB Leipzig","position":"Milieu","age":24,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1274060/neil-el-aynaoui"},
+    {"id":"33","name":"Aymen Assab","club":"AS Monaco","position":"Milieu","age":18,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1830663/aymen-assab"},
+    {"id":"34","name":"Bilal Nadir","club":"Hambourg SV","position":"Milieu","age":22,"minutes":53,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1283407/bilal-nadir"},
+    {"id":"35","name":"Samir El Mourabet","club":"RC Strasbourg","position":"Milieu","age":20,"minutes":135,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1598170/samir-el-mourabet"},
+    {"id":"36","name":"Soufian El-Faouzi","club":"Schalke 04","position":"Milieu","age":24,"minutes":360,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1249185/soufian-el-faouzi"},
+    {"id":"37","name":"Reda Belahyane","club":"SS Lazio","position":"Milieu","age":22,"minutes":323,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1388071/reda-belahyane"},
+    {"id":"38","name":"Imran Louza","club":"Panathinaïkos","position":"Milieu","age":26,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/993022/imran-louza"},
+    {"id":"39","name":"Oussama Targhalline","club":"Feyenoord","position":"Milieu","age":24,"minutes":346,"assists":1,"goals":null,"link":"https://www.fotmob.com/fr/players/1228273/oussama-targhalline"},
+    {"id":"40","name":"Amir Richardson","club":"Le Havre / Fiorentina","position":"Milieu","age":24,"minutes":442,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1255860/amir-richardson"},
+    {"id":"41","name":"Oussama El Azzouzi","club":"Bologna FC","position":"Milieu","age":25,"minutes":79,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1283469/oussama-el-azzouzi"},
+    {"id":"42","name":"Ayyoub Bouaddi","club":"Manchester City / Lille","position":"Milieu","age":18,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1561552/ayyoub-bouaddi"},
+    {"id":"43","name":"Sofyan Amrabat","club":"Ajax / Fenerbahçe","position":"Milieu","age":29,"minutes":173,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/593116/sofyan-amrabat"},
+    {"id":"44","name":"Amine El Ouazzani","club":"Angers SCO","position":"Attaquant","age":25,"minutes":385,"assists":2,"goals":1,"link":"https://www.fotmob.com/fr/players/1123505/amine-el-ouazzani"},
+    {"id":"45","name":"Youssef En-Nesyri","club":"Al-Ittihad / Fenerbahçe","position":"Attaquant","age":28,"minutes":781,"assists":null,"goals":5,"link":"https://www.fotmob.com/fr/players/788555/youssef-en-nesyri"},
+    {"id":"46","name":"Amine Sbaï","club":"Angers SCO","position":"Attaquant","age":25,"minutes":427,"assists":1,"goals":1,"link":"https://www.fotmob.com/fr/players/1242587/amine-sbai"},
+    {"id":"47","name":"Amine Adli","club":"AFC Bournemouth","position":"Attaquant","age":26,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1079557/amine-adli"},
+    {"id":"48","name":"Abde Ezzalzouli","club":"Real Betis","position":"Attaquant","age":23,"minutes":1923,"assists":8,"goals":8,"link":"https://www.fotmob.com/fr/players/1209399/abde-ezzalzouli"},
+    {"id":"49","name":"Rayane Bounida","club":"Ajax Amsterdam","position":"Attaquant","age":20,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1699296/rayane-bounida"},
+    {"id":"50","name":"Brahim Díaz","club":"Real Madrid","position":"Attaquant","age":26,"minutes":1003,"assists":5,"goals":null,"link":"https://www.fotmob.com/fr/players/750027/brahim-diaz"},
+    {"id":"51","name":"Hamza Igamane","club":"Lille OSC / Rangers","position":"Attaquant","age":23,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1421275/hamza-igamane"},
+    {"id":"52","name":"Mohamed-Ali Cho","club":"Hull City / Nice","position":"Attaquant","age":22,"minutes":72,"assists":null,"goals":1,"link":"https://www.fotmob.com/fr/players/1180718/mohamed-ali-cho"},
+    {"id":"53","name":"Sofiane Diop","club":"OGC Nice","position":"Attaquant","age":26,"minutes":256,"assists":1,"goals":null,"link":"https://www.fotmob.com/fr/players/953812/sofiane-diop"},
+    {"id":"54","name":"Yanis Begraoui","club":"Estoril Praia","position":"Attaquant","age":24,"minutes":2546,"assists":1,"goals":20,"link":"https://www.fotmob.com/fr/players/933639/yanis-begraoui"},
+    {"id":"55","name":"Safouane Benzahra","club":"AS Monaco","position":"Attaquant","age":20,"minutes":null,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1845327/safouane-benzahra"},
+    {"id":"56","name":"Yassir Zabiri","club":"Racing Santander","position":"Attaquant","age":21,"minutes":386,"assists":null,"goals":6,"link":"https://www.fotmob.com/fr/players/1640985/yassir-zabiri"},
+    {"id":"57","name":"Ilias Akhomach","club":"Rayo Vallecano","position":"Attaquant","age":21,"minutes":1074,"assists":1,"goals":null,"link":"https://www.fotmob.com/fr/players/1311915/ilias-akhomach"},
+    {"id":"58","name":"Zakaria Aboukhlal","club":"Torino FC","position":"Attaquant","age":26,"minutes":26,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/846761/zakaria-aboukhlal"},
+    {"id":"59","name":"Couhaib Driouech","club":"Celta Vigo","position":"Attaquant","age":24,"minutes":63,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1184693/couhaib-driouech"},
+    {"id":"60","name":"Eliesse Ben Seghir","club":"Bayer Leverkusen","position":"Attaquant","age":21,"minutes":10,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1393439/eliesse-ben-seghir"},
+    {"id":"61","name":"Amir Bouhamdi","club":"PSV Eindhoven","position":"Attaquant","age":18,"minutes":166,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/1834912/amir-bouhamdi"},
+    {"id":"62","name":"Osame Sahraoui","club":"Lille OSC","position":"Attaquant","age":25,"minutes":98,"assists":null,"goals":null,"link":"https://www.fotmob.com/fr/players/988160/osame-sahraoui"},
+    {"id":"63","name":"Chemsdine Talbi","club":"Sunderland","position":"Attaquant","age":20,"minutes":1452,"assists":1,"goals":4,"link":"https://www.fotmob.com/fr/players/1368654/chemsdine-talbi"},
+    {"id":"64","name":"Gessime Yassine","club":"RC Strasbourg","position":"Attaquant","age":20,"minutes":434,"assists":2,"goals":1,"link":"https://www.fotmob.com/fr/players/1603755/gessime-yassine"}
+  ];
+
+  // Restauration du localStorage si un CSV plus récent a été importé
+  let stored = localStorage.getItem('morocco_players_data');
+  let players = stored ? JSON.parse(stored) : initialData;
+
+  let currentPosFilter = 'all';
+  let searchQuery = '';
+  let currentSort = 'minutes';
+
+  // Rendu de l'interface
+  function updateUI() {
+    updateKPIs();
+    renderCards();
+  }
+
+  function updateKPIs() {
+    document.getElementById('kpiTotal').textContent = players.length;
+    document.getElementById('countAll').textContent = players.length;
+    document.getElementById('kpiGk').textContent = players.filter(p => p.position === 'Gardien').length;
+    document.getElementById('kpiDef').textContent = players.filter(p => p.position === 'Défenseur').length;
+    document.getElementById('kpiMid').textContent = players.filter(p => p.position === 'Milieu').length;
+    document.getElementById('kpiAtt').textContent = players.filter(p => p.position === 'Attaquant').length;
+  }
+
+  function renderCards() {
+    const grid = document.getElementById('playersGrid');
+    grid.innerHTML = '';
+
+    let filtered = players.filter(p => {
+      const matchPos = currentPosFilter === 'all' || p.position === currentPosFilter;
+      const q = searchQuery.toLowerCase();
+      const matchSearch = !q || p.name.toLowerCase().includes(q) || (p.club && p.club.toLowerCase().includes(q));
+      return matchPos && matchSearch;
+    });
+
+    // Tri
+    filtered.sort((a, b) => {
+      if (currentSort === 'minutes') return (b.minutes || 0) - (a.minutes || 0);
+      if (currentSort === 'goals') return (b.goals || 0) - (a.goals || 0);
+      if (currentSort === 'age') return (b.age || 0) - (a.age || 0);
+      if (currentSort === 'name') return a.name.localeCompare(b.name);
+      return 0;
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><h3>Aucun joueur trouvé</h3><p>Essayez un autre mot-clé ou modifiez vos filtres.</p></div>';
+      return;
+    }
+
+    filtered.forEach(p => {
+      const posClass = 'pos-' + p.position.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const badgeClass = 'badge-' + p.position.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const maxMinutes = 2600;
+      const pct = Math.min(100, Math.round(((p.minutes || 0) / maxMinutes) * 100));
+
+      const card = document.createElement('div');
+      card.className = `player-card ${posClass}`;
+
+      let statsHTML = '';
+      if (p.position === 'Gardien') {
+        statsHTML = `
+          <div class="stats-row">
+            <div class="stat-col"><span class="stat-label">Minutes</span><span class="stat-num">${p.minutes || '-'}</span></div>
+            <div class="stat-col"><span class="stat-label">Encaissés</span><span class="stat-num">${p.goals_conceded !== null && p.goals_conceded !== undefined ? p.goals_conceded : '-'}</span></div>
+            <div class="stat-col"><span class="stat-label">Clean Sheet</span><span class="stat-num">-</span></div>
+          </div>`;
+      } else {
+        statsHTML = `
+          <div class="stats-row">
+            <div class="stat-col"><span class="stat-label">Minutes</span><span class="stat-num">${p.minutes || '-'}</span></div>
+            <div class="stat-col"><span class="stat-label">Buts</span><span class="stat-num" style="color:#fb7185;">${p.goals || '0'}</span></div>
+            <div class="stat-col"><span class="stat-label">Passes D.</span><span class="stat-num" style="color:#38bdf8;">${p.assists || '0'}</span></div>
+          </div>`;
+      }
+
+      card.innerHTML = `
+        <div>
+          <div class="card-top">
+            <span class="pos-badge ${badgeClass}">${p.position}</span>
+            <span class="player-age">${p.age ? p.age + ' ans' : '-'}</span>
+          </div>
+          <h2 class="player-name">${p.name}</h2>
+          <div class="player-club">
+            <span class="club-dot"></span>
+            <span>${p.club || 'Club non spécifié'}</span>
+          </div>
+          ${statsHTML}
+          <div class="min-bar-wrapper">
+            <div class="min-bar-labels">
+              <span>Temps de jeu</span>
+              <span><strong>${p.minutes || 0}</strong> min</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        </div>
+        <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer" class="btn-link ${!p.link ? 'disabled' : ''}">
+          <span>Fiche officielle FotMob</span>
+          <span>↗</span>
+        </a>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Événements de recherche et filtres
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchQuery = e.target.value;
+    renderCards();
+  });
+
+  document.getElementById('sortSelect').addEventListener('change', e => {
+    currentSort = e.target.value;
+    renderCards();
+  });
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPosFilter = btn.dataset.pos;
+      renderCards();
+    });
+  });
+
+  // PARSER DE FICHIER CSV EN TEMPS RÉEL (Séparateur ';')
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const text = evt.target.result;
+        const lines = text.split(/\r?\n/);
+        let parsed = [];
+        let currentPos = 'Gardien';
+
+        lines.forEach((line, index) => {
+          if (!line.trim()) return;
+          const cols = line.split(';');
+          const first = cols[0] ? cols[0].trim() : '';
+
+          if (first.includes('Gardien')) { currentPos = 'Gardien'; return; }
+          if (first.includes('Diffence') || first.includes('Défense')) { currentPos = 'Défenseur'; return; }
+          if (first.includes('Attaquant')) { currentPos = 'Attaquant'; return; }
+
+          if (cols[1] && cols[1].trim().toLowerCase() === 'club') {
+            if (index >= 24 && index < 49) currentPos = 'Milieu';
+            return;
+          }
+
+          const club = cols[1] ? cols[1].trim() : '';
+          const name = cols[2] ? cols[2].trim() : '';
+          if (!name && !club) return;
+
+          const age = cols[3] && !isNaN(parseInt(cols[3])) ? parseInt(cols[3]) : null;
+          const minutes = cols[4] && !isNaN(parseInt(cols[4])) ? parseInt(cols[4]) : null;
+          const col5 = cols[5] && !isNaN(parseInt(cols[5])) ? parseInt(cols[5]) : null;
+          const col6 = cols[6] && !isNaN(parseInt(cols[6])) ? parseInt(cols[6]) : null;
+
+          let link = '';
+          cols.forEach(c => { if (c.trim().startsWith('http')) link = c.trim(); });
+
+          let playerObj = {
+            id: first || String(parsed.length + 1),
+            name: name,
+            club: club,
+            position: currentPos,
+            age: age,
+            minutes: minutes,
+            link: link
+          };
+
+          if (currentPos === 'Gardien') {
+            playerObj.goals_conceded = col5;
+          } else {
+            playerObj.assists = col5;
+            playerObj.goals = col6;
+          }
+          parsed.push(playerObj);
+        });
+
+        if (parsed.length > 0) {
+          players = parsed;
+          localStorage.setItem('morocco_players_data', JSON.stringify(players));
+          updateUI();
+          alert(`✅ Succès ! ${parsed.length} joueurs ont été mis à jour avec succès.`);
+        }
+      } catch (err) {
+        alert('Erreur lors de la lecture du fichier CSV. Assurez-vous du format.');
+        console.error(err);
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  // Premier affichage
+  updateUI();
+</script>
+</body>
+</html>
